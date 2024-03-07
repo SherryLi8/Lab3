@@ -1,0 +1,66 @@
+[gd_scene load_steps=9 format=3 uid="uid://ddddoeag2827o"]
+
+[ext_resource type="ArrayMesh" uid="uid://cgrqe0ke5ckfv" path="res://10450_Rectangular_Grass_Patch_L3.123c827d110a-1347-4381-9208-e4f735762647/10450_Rectangular_Grass_Patch_v1_iterations-2.obj" id="1_t3maa"]
+[ext_resource type="Script" path="res://AnimationPlayer.gd" id="1_tnj8l"]
+[ext_resource type="Texture2D" uid="uid://dcxmatp3a7k24" path="res://Room-Door/textures/Door_C.jpg" id="2_sy2bc"]
+[ext_resource type="ArrayMesh" uid="uid://dsqp1m111x4ew" path="res://Room-Door/Door_Component_BI3.obj" id="3_mlyw7"]
+[ext_resource type="ArrayMesh" uid="uid://f8lw7y6an5ul" path="res://57-couch-obj/couch.obj" id="4_syn3y"]
+
+[sub_resource type="Animation" id="Animation_pr5f6"]
+resource_name = "Door"
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DoorComponentBi3")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, -13.0673, -278.163, 0.2, 1, 0, -13.0673, -171.838, 0.4, 1, 33.9663, -13.0673, -138.004, 0.6, 1, -59.4064, -13.0673, -68.5747, 0.8, 1, 0, -13.0673, -49.1933, 1, 1, 0, -13.0673, -6.72862)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bytjg"]
+_data = {
+"Door": SubResource("Animation_pr5f6")
+}
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_csc31"]
+albedo_texture = ExtResource("2_sy2bc")
+
+[node name="Node3D" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.762323, 0)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.154519, 22.6557, 132.84)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Camera3D"]
+libraries = {
+"": SubResource("AnimationLibrary_bytjg")
+}
+speed_scale = 1.043
+script = ExtResource("1_tnj8l")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.22513, 161.207, -408.109)
+light_color = Color(1, 1, 0.901961, 1)
+light_energy = 3.667
+light_indirect_energy = 2.343
+light_volumetric_fog_energy = 9.212
+light_angular_distance = 30.46
+shadow_enabled = true
+shadow_bias = 0.81
+
+[node name="10450RectangularGrassPatchV1Iterations-2" type="MeshInstance3D" parent="Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 0.019686, 0.999806, 0, -0.999806, 0.019686, -9.58778, -31.3918, -167.843)
+mesh = ExtResource("1_t3maa")
+skeleton = NodePath("../..")
+
+[node name="DoorComponentBi3" type="MeshInstance3D" parent="Camera3D"]
+transform = Transform3D(43.9629, 0, 0, 0, 43.9629, 0, 0, 0, 1, 0, -13.0673, -6.72862)
+material_override = SubResource("StandardMaterial3D_csc31")
+mesh = ExtResource("3_mlyw7")
+skeleton = NodePath("../..")
+
+[node name="Couch" type="MeshInstance3D" parent="Camera3D"]
+transform = Transform3D(-0.023506, 0, -4.70962e-05, 0, 0.023506, 0, 3.93847e-05, 0, -0.0281084, 0.988515, -25.5193, -51.2766)
+mesh = ExtResource("4_syn3y")
+skeleton = NodePath("../..")
+
+[connection signal="visibility_changed" from="Camera3D/DoorComponentBi3" to="Camera3D/AnimationPlayer" method="_on_door_component_bi_3_visibility_changed"]
